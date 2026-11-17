@@ -4,14 +4,14 @@
 
 Technitium DNS Server blocks ads like Pi-hole, but it finds every answer on its own (recursive), so Google, Cloudflare or your internet provider's DNS never get the list of sites your home visits. This repo has the install command, the Advanced Blocking config (YouTube and TikTok blocked on one kid's laptop only) and the keepalived files for a second server with one floating IP, all from the video.
 
-The addresses below are the ones from the video (my lab network). Replace each one with the IP of your own device:
+The addresses below are examples. Replace them with yours:
 
-| | IP in the video | Role |
+| | IP | Role |
 |---|---|---|
-| `dns1` | `10.37.0.61` | main server |
-| `dns2` | `10.37.0.62` | second server |
-| floating IP | `10.37.0.60` | what your devices use as DNS (keepalived only) |
-| kid's laptop | `10.37.0.106` | the device in the `kids` group |
+| `dns1` | `192.168.1.61` | main server |
+| `dns2` | `192.168.1.62` | second server |
+| floating IP | `192.168.1.60` | what your devices use as DNS (keepalived only) |
+| kid's laptop | `192.168.1.50` | the device in the `kids` group |
 
 ## What you need
 Official requirements from [technitium.com/dns](https://technitium.com/dns/):
@@ -35,7 +35,7 @@ curl -sSL https://download.technitium.com/dns/install.sh | sudo bash
 It prints a web address with the server's name. Your PC may not know that name yet, so use the IP instead.
 
 ## Step 2: The dashboard
-Open `http://10.37.0.61:5380` in your browser. The first time, it asks for a new admin password. This page controls your whole network's DNS, so make it strong.
+Open `http://192.168.1.61:5380` in your browser. The first time, it asks for a new admin password. This page controls your whole network's DNS, so make it strong.
 
 ## Step 3: Ad blocking
 Settings → Blocking → Quick Add → **Default** → Save. Blocking is already on; this adds one well-known list (about 77,000 domains), updated every day.
@@ -52,7 +52,7 @@ nslookup github.com
 
 **"No response from server"?** Your router probably hands out an IPv6 DNS server too, and Windows asks that one first. Untick **Internet Protocol Version 6 (TCP/IPv6)** in the same adapter properties and try again.
 
-Whole house: put the Technitium server's IP in your router's **DHCP** settings as the DNS server it hands out (not the WAN DNS setting). The [Pi-hole video](https://youtu.be/UDNSbAFTXxQ) shows that screen.
+Whole house: put the Technitium server's IP in your router's **DHCP** settings as the DNS server it hands out (not the WAN DNS setting). The [Pi-hole setup video](https://youtu.be/k9GPXPp1KU0) shows that screen.
 
 ## Step 5: Answers on its own
 - Settings → Proxy & Forwarders: the forwarders box is empty, so Technitium goes to the root servers itself.
@@ -71,7 +71,7 @@ Use `home.arpa` (reserved for home networks) or a part of your domain nothing el
 Apps → App Store → **Advanced Blocking** → Install → Config. Replace the sample with [advanced-blocking/config.json](advanced-blocking/config.json) and Save.
 
 Change only two things:
-1. `"10.37.0.106"` under `networkGroupMap`: your kid's laptop's IP.
+1. `"192.168.1.50"` under `networkGroupMap`: your kid's laptop's IP.
 2. The `blocked` list: the sites to block for that group (`youtube.com`, `tiktok.com` in the video).
 
 Keep every other line, even the empty ones: each group needs them all. Then reserve that laptop's IP in your router (DHCP reservation / static lease), or it can get a new address and slip out of the group.
@@ -95,7 +95,7 @@ Install Technitium on a second machine (Steps 1 and 2).
 The cluster copies settings, but each server keeps its own IP, and while dns1 is off you can't change settings.
 
 ### One floating IP with keepalived (optional)
-Your devices get one address (`10.37.0.60`) that moves to whichever server is alive. The full walkthrough is in the [Pi-hole High Availability video](https://youtu.be/UDNSbAFTXxQ) and [Pihole_HA](https://github.com/wetsand24/Pihole_HA). For Technitium only the health check changes.
+Your devices get one address (`192.168.1.60`) that moves to whichever server is alive. The full walkthrough is in the [Pi-hole High Availability video](https://youtu.be/UDNSbAFTXxQ) and [Pihole_HA](https://github.com/wetsand24/Pihole_HA). For Technitium only the health check changes.
 
 On both servers:
 ```bash
