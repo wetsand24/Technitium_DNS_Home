@@ -1,6 +1,6 @@
 # Technitium DNS Server at home
 
-▶️ Video: coming soon
+▶️ Video: https://youtu.be/MQcR3S3qYVM
 
 Technitium DNS Server blocks ads like Pi-hole, but it finds every answer on its own (recursive), so Google, Cloudflare or your internet provider's DNS never get the list of sites your home visits. This repo has the install command, the Advanced Blocking config (YouTube and TikTok blocked on one kid's laptop only) and the keepalived files for a second server with one floating IP, all from the video.
 
