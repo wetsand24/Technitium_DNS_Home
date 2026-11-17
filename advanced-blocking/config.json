@@ -1,0 +1,25 @@
+{
+  "enableBlocking": true,
+  "networkGroupMap": {
+    "192.168.1.50": "kids"
+  },
+  "groups": [
+    {
+      "name": "kids",
+      "enableBlocking": true,
+      "blockAsNxDomain": true,
+      "allowed": [],
+      "blocked": [
+        "youtube.com",
+        "tiktok.com"
+      ],
+      "allowListUrls": [],
+      "blockListUrls": [],
+      "allowedRegex": [],
+      "blockedRegex": [],
+      "regexAllowListUrls": [],
+      "regexBlockListUrls": [],
+      "adblockListUrls": []
+    }
+  ]
+}
